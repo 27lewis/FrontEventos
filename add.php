@@ -30,13 +30,14 @@
             <label for="recipient-name" class="col-form-label">Correo:</label>
             <input type="email" class="form-control" id="correo" name="correo" require>
           </div>
+
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-success">Guardar</button>
+            </div>
           
         </form>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Guardar</button>
-      </div>
+
     </div>
   </div>
 </div>

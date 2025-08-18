@@ -39,6 +39,8 @@ if (!is_array($objeto) && !is_object($objeto)) {
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">Nuevo cliente</button>
+
+
 <table class="table table-striped table-hover" id="tblcliente">
     <thead>
         <tr>
@@ -112,6 +114,55 @@ function Eliminar(idcliente) {
   }
 }
 </script>
+
+  <script>
+    $(document).ready(function guardar(tblcliente) {
+      $("#formnew").on("submit", function (e) {
+        e.preventDefault(); // Evita recargar la página
+
+        let datos = {
+          nombres: $("#nombres").val(),
+          apellidos: $("#apellidos").val(),
+          direccion: $("#direccion").val(),
+          telefono: $("#telefono").val(),
+          correo: $("#correo").val()
+        };
+
+        let datosJson = JSON.stringify(datos);
+
+        $.ajax({
+          type: "POST",
+          url: "http://localhost/APIeventos/clientes/save_clientes.php",
+          data: datosJson,
+          contentType: "application/json; charset=utf-8",
+          dataType: "json",
+          success: function (response) {
+            Swal.fire({
+              title: "Resultado",
+              text: response.mensaje,
+              icon: response.codigo == "1" ? "success" : "warning"
+            }).then(() => {
+              if (response.codigo == "1") {
+                $("#formnew")[0].reset(); // Limpia el formulario
+              }
+              location.reload();
+            });
+          },
+          error: function (xhr, status, error) {
+            Swal.fire({
+              title: "Error",
+              text: "No se pudo guardar el registro. " + error,
+              icon: "error"
+            });
+          }
+        });
+      });
+    });
+  </script>
+
+
+
+
 
 <?php
 include('add.php');
